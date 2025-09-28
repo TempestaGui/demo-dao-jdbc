@@ -1,5 +1,7 @@
 package application;
 
+import model.dao.DaoFactory;
+import model.dao.SellerDao;
 import model.entities.Department;
 import model.entities.Seller;
 
@@ -12,5 +14,7 @@ public class Program {
         Seller s1 = new Seller(1,"John","John@gmail",new Date(),3000.0,dp);
         System.out.println(s1);
         System.out.println(dp.toString());
+
+        SellerDao sellerDao = DaoFactory.crateSellerDao(); //injecao de dependicia sem instancia a aplicaçao
     }
 }
