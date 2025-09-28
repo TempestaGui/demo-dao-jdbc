@@ -12,7 +12,7 @@ import java.util.Date;
 public class Program {
     public static void main(String[] args) throws SQLException, IOException {
         SellerDao sellerDao = DaoFactory.crateSellerDao(); //injecao de dependicia sem instancia a aplicaçao
-
+        System.out.println("=== Test 1: seller findById ===");
         Seller seller = sellerDao.findById(22);
         System.out.println(seller);
     }
