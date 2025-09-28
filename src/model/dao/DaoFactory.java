@@ -1,11 +1,15 @@
 package model.dao;
 
+import db.DB;
 import model.dao.impl.SellerDaoJDBC;
+
+import java.io.IOException;
+import java.sql.SQLException;
 
 public class DaoFactory {
 
-    public static SellerDao crateSellerDao(){
-        return new SellerDaoJDBC();
+    public static SellerDao crateSellerDao() throws SQLException, IOException {
+        return new SellerDaoJDBC(DB.getConnection());
     }
 
 }
