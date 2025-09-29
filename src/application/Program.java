@@ -8,6 +8,7 @@ import model.entities.Seller;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Date;
+import java.util.List;
 
 public class Program {
     public static void main(String[] args) throws SQLException, IOException {
@@ -15,5 +16,12 @@ public class Program {
         System.out.println("=== Test 1: seller findById ===");
         Seller seller = sellerDao.findById(22);
         System.out.println(seller);
+
+        System.out.println("\n=== Test 2: seller findSellerByDepartmentId ===");
+        Department dep = new Department(null, 2);
+        List<Seller> list = sellerDao.findByDepartmentId(dep);
+        for(Seller s: list){
+            System.out.println(s);
+        }
     }
 }

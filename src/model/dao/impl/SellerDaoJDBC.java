@@ -10,7 +10,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class SellerDaoJDBC implements SellerDao {
 
@@ -79,5 +82,40 @@ public class SellerDaoJDBC implements SellerDao {
         department.setId(rs.getInt("DepartmentId"));
         department.setName(rs.getString("DepName"));
         return department;
+    }
+
+    @Override
+    public List<Seller> findByDepartmentId(Department department) {
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        try{
+            st = conn.prepareStatement(
+                    "Select seller.*, department.name as DepName "+
+                            "from seller inner join department "+
+                            "on seller.DepartmentId = department.id "+
+                            "where DepartmentId = ? "+
+                            "order by Name"
+            );
+
+            st.setInt(1, department.getId());
+            rs = st.executeQuery();
+            List<Seller> result = new ArrayList<>();
+
+            Map<Integer, Department> map = new HashMap<>(); //criando um map vazio
+
+            while(rs.next()){
+
+                Department dep = map.get(rs.getInt("DepartmentId")); //guardando no map o departamento que
+                // instanciar e buscando se ja tem algum com o mesmo id, se nao existir retorna nulo
+                if(dep == null){
+                    dep = instantiateDepartment(rs);
+                    map.put(rs.getInt("DepartmentId"), dep);
+                }
+                result.add(instantiateSeller(rs, dep));
+            }
+            return result;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
