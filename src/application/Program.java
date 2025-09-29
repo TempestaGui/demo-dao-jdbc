@@ -14,7 +14,7 @@ public class Program {
     public static void main(String[] args) throws SQLException, IOException {
         SellerDao sellerDao = DaoFactory.crateSellerDao(); //injecao de dependicia sem instancia a aplicaçao
         System.out.println("=== Test 1: seller findById ===");
-        Seller seller = sellerDao.findById(22);
+        Seller seller = sellerDao.findById(24);
         System.out.println(seller);
 
         System.out.println("\n=== Test 2: seller findSellerByDepartmentId ===");
@@ -29,5 +29,10 @@ public class Program {
         for(Seller s: list2){
             System.out.println(s);
         }
+
+        System.out.println("\n=== Test 4: seller insert seller");
+        Seller seller1 = new Seller(null,"test","teste@gmail", new Date(), 3000.0, dep);
+        sellerDao.insert(seller1);
+        System.out.println("inserted! new id = "+ seller1.getId());
     }
 }
