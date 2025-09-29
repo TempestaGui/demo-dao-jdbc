@@ -9,12 +9,16 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
+import java.util.Scanner;
 
 public class Program {
     public static void main(String[] args) throws SQLException, IOException {
+
+        Scanner sc = new Scanner(System.in);
+
         SellerDao sellerDao = DaoFactory.crateSellerDao(); //injecao de dependicia sem instancia a aplicaçao
         System.out.println("=== Test 1: seller findById ===");
-        Seller seller = sellerDao.findById(24);
+        Seller seller = sellerDao.findById(1);
         System.out.println(seller);
 
         System.out.println("\n=== Test 2: seller findSellerByDepartmentId ===");
@@ -35,10 +39,15 @@ public class Program {
         sellerDao.insert(seller1);
         System.out.println("inserted! new id = "+ seller1.getId());
 
-        System.out.println("\n=== Test 5: seller update seller ===");
-        seller = sellerDao.findById(24);
-        seller.setName("teste2");
-        sellerDao.update(seller);
-        System.out.println("update seller successful");
+//        System.out.println("\n=== Test 5: seller update seller ===");
+//        seller = sellerDao.findById(24);
+//        seller.setName("teste2");
+//        sellerDao.update(seller);
+//        System.out.println("update seller successful");
+
+        System.out.println("\n=== Test 6: seller deleteById ===");
+        System.out.print("Enter id for delete test: ");
+        int id = sc.nextInt();
+        sellerDao.deleteById(id);
     }
 }
