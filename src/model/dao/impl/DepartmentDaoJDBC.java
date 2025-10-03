@@ -1,0 +1,60 @@
+package model.dao.impl;
+
+import db.DbException;
+import model.dao.DepartmentDao;
+import model.entities.Department;
+
+import java.sql.*;
+import java.util.List;
+
+public class DepartmentDaoJDBC implements DepartmentDao {
+    Connection conn = null;
+
+    public DepartmentDaoJDBC(Connection conn) {
+        this.conn = conn;
+    }
+
+    @Override
+    public void insert(Department obj) {
+        PreparedStatement st = null;
+        try{
+            st = conn.prepareStatement("INSERT INTO department "+
+                                        "(name) "+
+                                        "VALUES (?) ", Statement.RETURN_GENERATED_KEYS);
+
+            st.setString(1, obj.getName());
+            int row = st.executeUpdate();
+            if(row > 0){
+                ResultSet rs = st.getGeneratedKeys();
+                if(rs.next()){
+                    int id = rs.getInt(1);
+                    obj.setId(id);
+                }else {
+                    throw new DbException("Unexpected error! no rows affected!");
+                }
+            }
+        } catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        }
+    }
+
+    @Override
+    public void update(Department obj) {
+
+    }
+
+    @Override
+    public void deleteById(Integer byId) {
+
+    }
+
+    @Override
+    public Department findById(Integer byId) {
+        return null;
+    }
+
+    @Override
+    public List<Department> findAll() {
+        return List.of();
+    }
+}
