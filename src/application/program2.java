@@ -26,5 +26,8 @@ public class program2 {
         for(Department d: list){
             System.out.println(d);
         }
+
+        System.out.println("=== Test 4: Delete department");
+        departmentDao.deleteById(14);
     }
 }
