@@ -6,6 +6,7 @@ import model.entities.Department;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 
 public class program2 {
     public static void main(String[] args) throws SQLException, IOException {
@@ -19,5 +20,11 @@ public class program2 {
         System.out.println("=== Test 2: FindById department");
         Department dep = departmentDao.findById(13);
         System.out.println(dep);
+
+        System.out.println("=== Test 3: FindAll departments");
+        List<Department> list = departmentDao.findAll();
+        for(Department d: list){
+            System.out.println(d);
+        }
     }
 }
